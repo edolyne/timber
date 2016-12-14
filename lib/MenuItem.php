@@ -329,4 +329,23 @@ class MenuItem extends Core implements CoreInterface {
 			error_log('no master object');
 		}
 	}
+	
+	/**
+	 * Gets the post content
+	 * @example
+	 * ```twig
+	 * {% for item in menu.items %}
+	 *     <li><p>{{content|striptags|truncate(25)}}...<a href="{{item.get_link}}">Read More</a></p></li>
+	 * {% endfor %}
+	 * ```
+	 * @return post content string
+	 */
+	public function content() {
+		$postId = get_post_meta( $this->ID, '_menu_item_object_id', true );
+
+		$content_post = get_post($postId);
+		$content = $content_post->post_content;
+
+		return $content;
+	}
 }
